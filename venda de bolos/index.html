@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Vendas de Bolo</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lavishly+Yours&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-image: url('./container.png');
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .container {
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 10px 10px 68px 17px rgba(87, 51, 45, 1);
+      -webkit-box-shadow: 10px 10px 68px 17px rgba(87, 51, 45, 1);
+      -moz-box-shadow: 10px 10px 68px 17px rgba(87, 51, 45, 1);
+      border-radius: 10px;
+      background-image: url('./foto-1_f2501260-7c07-4e77-a034-c40f8c38732c.webp');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-family: "Oswald", sans-serif;
+      color: #000000;
+      
+    }
+
+    form input,
+    form button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      
+    }
+
+    form input {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #333;
+    }
+
+    form input::placeholder {
+      color: #666;
+    }
+
+    form input:focus {
+      border-color: #993434;
+      outline: none;
+    }
+
+    form button {
+      background-color: #993434;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #582a2a;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Doce Damasco</h1>
+
+    <form id="form-venda">
+      <input name="cliente" placeholder="Cliente" required />
+      <input name="sabor" placeholder="Sabor do Bolo" required />
+      <input name="tamanho" placeholder="Tamanho (P/M/G)" required />
+      <input name="preco" type="number" step="0.01" placeholder="Preço Unitário (R$)" required />
+      <input name="quantidade" type="number" placeholder="Quantidade" required />
+      <input name="custo" type="number" step="0.01" placeholder="Custo estimado (R$)" required />
+      <button type="submit">Salvar Venda</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("form-venda");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const dados = {
+        cliente: form.cliente.value,
+        sabor: form.sabor.value,
+        tamanho: form.tamanho.value,
+        preco: form.preco.value,
+        quantidade: form.quantidade.value,
+        custo: form.custo.value
+      };
+
+      const url = "https://script.google.com/macros/s/AKfycbyuXHNlmZhT7JewCttKsVz2TwUdEkT3wFfQGNADeHsuG2ra_AxmdXL_C_AiOE0Ep6T7/exec";
+
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(dados)
+        });
+
+        if (res.ok) {
+          alert("Venda salva com sucesso!");
+          form.reset();
+        } else {
+          alert("Erro ao salvar!");
+        }
+      } catch {
+        alert("Erro de rede!");
+      }
+    });
+  </script>
+
+</body>
+</html>
